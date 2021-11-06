@@ -1,4 +1,4 @@
-package kz.pompei.geo_gebra;
+package kz.pompei.geo_gebra.core;
 
 import org.testng.annotations.Test;
 
