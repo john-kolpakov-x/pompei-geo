@@ -4,12 +4,15 @@ import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import kz.pompei.geo_gebra.core.paint.Drawer;
 import kz.pompei.geo_gebra.core.paint.MouseEventType;
 import kz.pompei.geo_gebra.core.paint.Painter;
+import kz.pompei.geo_gebra.core.store.StrAcceptorInFile;
 
 public class Launcher {
 
@@ -25,7 +28,11 @@ public class Launcher {
     frame.setSize(1200, 600);
     frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-    Painter painter = new Painter(new Drawer());
+    var dataDir = Paths.get("build").resolve(getClass().getSimpleName());
+
+    var pixelWorldMapperSaver = new StrAcceptorInFile(dataDir.resolve("pixelWorldMapper.txt"));
+
+    Painter painter = new Painter(new Drawer(pixelWorldMapperSaver));
 
     frame.setContentPane(painter);
 

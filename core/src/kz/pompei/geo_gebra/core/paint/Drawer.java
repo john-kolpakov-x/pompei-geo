@@ -3,12 +3,20 @@ package kz.pompei.geo_gebra.core.paint;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import kz.pompei.geo_gebra.core.draw.DrawArrow;
+import kz.pompei.geo_gebra.core.model.PixelWorldMapper;
+import kz.pompei.geo_gebra.core.store.StrAcceptor;
 
 public class Drawer {
 
+  private final StrAcceptor pixelWorldMapperSaver;
+
   private static final Color AXES_COLOR = Color.gray;
 
-  private double xCenter = 0, yCenter = 0, scaleX = 3, scaleY = 3;
+  private final PixelWorldMapper mapper = new PixelWorldMapper();
+
+  public Drawer(StrAcceptor pixelWorldMapperSaver) {
+    this.pixelWorldMapperSaver = pixelWorldMapperSaver;
+  }
 
   public void draw(Graphics2D g, int width, int height) {
     drawAxes(g, width, height);
@@ -23,7 +31,7 @@ public class Drawer {
 
     double width_2 = (double) width / 2.0;
 
-    double pixelDeltaCenterX = xCenter / scaleX;
+    double pixelDeltaCenterX = mapper.xCenter / mapper.scaleX;
     if (pixelDeltaCenterX > width_2) {
       return;
     }
@@ -40,7 +48,7 @@ public class Drawer {
   private void drawAxeY(Graphics2D g, int width, int height) {
     double height_2 = (double) height / 2.0;
 
-    double pixelDeltaCenterY = yCenter / scaleY;
+    double pixelDeltaCenterY = mapper.yCenter / mapper.scaleY;
     if (pixelDeltaCenterY > height_2) return;
     if (pixelDeltaCenterY < -height_2) return;
 
@@ -52,10 +60,10 @@ public class Drawer {
 
   public void moveAxes(int pixelDeltaX, int pixelDeltaY) {
 
-    double deltaX = +(pixelDeltaX * scaleX);
-    double deltaY = -(pixelDeltaY * scaleY);
+    double deltaX = +(pixelDeltaX * mapper.scaleX);
+    double deltaY = -(pixelDeltaY * mapper.scaleY);
 
-    xCenter += deltaX;
-    yCenter += deltaY;
+    mapper.xCenter += deltaX;
+    mapper.yCenter += deltaY;
   }
 }

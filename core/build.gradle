@@ -1,0 +1,3 @@
+dependencies {
+  testImplementation("kz.greetgo:greetgo.util:2.0.0")
+}
