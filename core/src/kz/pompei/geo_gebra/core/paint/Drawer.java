@@ -16,6 +16,7 @@ public class Drawer {
 
   public Drawer(StrAcceptor pixelWorldMapperSaver) {
     this.pixelWorldMapperSaver = pixelWorldMapperSaver;
+    mapper.assign(PixelWorldMapper.deserialize(pixelWorldMapperSaver.get()));
   }
 
   public void draw(Graphics2D g, int width, int height) {
@@ -65,5 +66,6 @@ public class Drawer {
 
     mapper.xCenter += deltaX;
     mapper.yCenter += deltaY;
+    pixelWorldMapperSaver.set(mapper.serialize());
   }
 }

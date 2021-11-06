@@ -23,15 +23,6 @@ public class Painter extends JPanel {
     super.paint(g);
     drawer.draw((Graphics2D) g, getWidth(), getHeight());
     paintMoveOperation((Graphics2D) g);
-
-    g.setColor(Color.RED);
-    g.drawLine(10, 0, 300, 300);
-    g.drawLine(10, 10, 300, 300);
-    g.drawLine(10, 20, 300, 300);
-    g.drawLine(10, 30, 300, 300);
-    g.drawLine(10, 40, 300, 300);
-    g.drawLine(10, 50, 300, 300);
-    g.drawLine(10, 60, 300, 300);
   }
 
   private void paintMoveOperation(Graphics2D g) {
@@ -57,7 +48,6 @@ public class Painter extends JPanel {
 
     if (met == MouseEventType.MOUSE_DRAGGED) {
       to = new Point(e.getX(), e.getY());
-      System.out.println("8S7SQ7ivr6 :: " + e.getPoint() + " :: " + getHeight() / 2);
       repaint();
       return;
     }
