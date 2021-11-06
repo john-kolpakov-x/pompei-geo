@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import kz.pompei.geo_gebra.core.draw.DrawArrow;
+import kz.pompei.geo_gebra.core.filter.EventFilter;
 
 public class Painter extends JPanel {
   private final Drawer drawer;
@@ -33,26 +34,27 @@ public class Painter extends JPanel {
   }
 
   public void mouseEvent(MouseEventType met, MouseEvent e) {
-    if (met == MouseEventType.MOUSE_PRESSED && e.getButton() == MouseEvent.BUTTON1) {
+    if (EventFilter.mousePressed().left().does(e)) {
       moveOperation = true;
       from          = e.getPoint();
       to            = from;
       repaint();
       return;
     }
-    if (met == MouseEventType.MOUSE_PRESSED && e.getButton() == MouseEvent.BUTTON3) {
+
+    if (EventFilter.mousePressed().right().does(e)) {
       moveOperation = false;
       repaint();
       return;
     }
 
-    if (met == MouseEventType.MOUSE_DRAGGED) {
+    if (EventFilter.mouseDragged().any().does(e)) {
       to = new Point(e.getX(), e.getY());
       repaint();
       return;
     }
 
-    if (met == MouseEventType.MOUSE_RELEASED && e.getButton() == MouseEvent.BUTTON1) {
+    if (EventFilter.mouseReleased().left().does(e)) {
       if (moveOperation) {
         int deltaX = to.x - from.x;
         int deltaY = to.y - from.y;
@@ -62,6 +64,7 @@ public class Painter extends JPanel {
       }
       return;
     }
+
   }
 
 }
