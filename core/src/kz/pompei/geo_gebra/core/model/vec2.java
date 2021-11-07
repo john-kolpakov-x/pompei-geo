@@ -68,8 +68,22 @@ public record vec2(double x, double y) {
     return x * a.x + y * a.y;
   }
 
+  public double sqr() {
+    return x * x + y * y;
+  }
+
+  public double sqrt() {
+    return Math.sqrt(sqr());
+  }
+
   public vec2 scalar(vec2 ox, vec2 oy) {
-    return vec2.of(scalar(ox), scalar(oy));
+
+    double D = ox.x * oy.y - ox.y * oy.x;
+
+    double X = x * oy.y - y * oy.x;
+    double Y = ox.x * y - ox.y * x;
+
+    return vec2.of(X / D, Y / D);
   }
 
   public vec2 unScalar(vec2 ox, vec2 oy) {

@@ -38,11 +38,17 @@ public class Cut {
     vec2 ox = planeDirection;
     vec2 oy = vec2.of(-ox.y(), ox.x());
 
-    var start_          = sector.start().scalar(ox, oy);
-    var finish_         = sector.finish().scalar(ox, oy);
+    var start_          = sector.start().minus(planeStart).scalar(ox, oy);
+    var finish_         = sector.finish().minus(planeStart).scalar(ox, oy);
     var infiniteBefore_ = sector.infiniteBefore();
     var infiniteAfter_  = sector.infiniteAfter();
     var delta_          = finish_.minus(start_);
+
+    if (false
+          || Double.isNaN(start_.x()) || Double.isNaN(start_.y())
+          || Double.isNaN(finish_.x()) || Double.isNaN(finish_.y())) {
+      return null;
+    }
 
     if (delta_.y() == 0) {
       return start_.y() > 0 ? sector : null;
@@ -130,8 +136,8 @@ public class Cut {
       }
     }
 
-    var newStart  = newStart_.unScalar(ox, oy);
-    var newFinish = newFinish_.unScalar(ox, oy);
+    var newStart  = newStart_.unScalar(ox, oy).plus(planeStart);
+    var newFinish = newFinish_.unScalar(ox, oy).plus(planeStart);
 
     return new sector2(newStart, newFinish, newInfBefore_, newInfAfter_);
   }
