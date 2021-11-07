@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import kz.pompei.geo_gebra.core.paint.Drawer;
-import kz.pompei.geo_gebra.core.paint.Painter;
+import kz.pompei.geo_gebra.core.paint.DrawPanel;
 import kz.pompei.geo_gebra.core.store.StrAcceptorInFile;
 
 public class Launcher {
@@ -31,36 +31,36 @@ public class Launcher {
 
     var pixelWorldMapperSaver = new StrAcceptorInFile(dataDir.resolve("pixelWorldMapper.txt"));
 
-    Painter painter = new Painter(new Drawer(pixelWorldMapperSaver));
+    DrawPanel drawPanel = new DrawPanel(new Drawer(pixelWorldMapperSaver));
 
-    frame.setContentPane(painter);
+    frame.setContentPane(drawPanel);
 
-    painter.addMouseListener(new MouseAdapter() {
+    drawPanel.addMouseListener(new MouseAdapter() {
       @Override
       public void mousePressed(MouseEvent e) {
-        painter.mouseEvent(e);
+        drawPanel.mouseEvent(e);
       }
 
       @Override
       public void mouseReleased(MouseEvent e) {
-        painter.mouseEvent(e);
+        drawPanel.mouseEvent(e);
       }
 
       @Override
       public void mouseClicked(MouseEvent e) {
-        painter.mouseClicked(e);
+        drawPanel.mouseClicked(e);
       }
     });
-    painter.addMouseMotionListener(new MouseMotionAdapter() {
+    drawPanel.addMouseMotionListener(new MouseMotionAdapter() {
       @Override
       public void mouseDragged(MouseEvent e) {
-        painter.mouseEvent(e);
+        drawPanel.mouseEvent(e);
       }
     });
-    painter.addMouseWheelListener(new MouseAdapter() {
+    drawPanel.addMouseWheelListener(new MouseAdapter() {
       @Override
       public void mouseWheelMoved(MouseWheelEvent e) {
-        painter.mouseWheelEvent(e);
+        drawPanel.mouseWheelEvent(e);
       }
     });
 
@@ -72,7 +72,7 @@ public class Launcher {
       @Override
       public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_R) {
-          painter.resetMapper();
+          drawPanel.resetMapper();
           return;
         }
       }

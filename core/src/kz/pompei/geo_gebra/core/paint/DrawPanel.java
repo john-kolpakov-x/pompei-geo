@@ -10,13 +10,13 @@ import javax.swing.JPanel;
 import kz.pompei.geo_gebra.core.draw.DrawArrow;
 import kz.pompei.geo_gebra.core.filter.EventFilter;
 
-public class Painter extends JPanel {
+public class DrawPanel extends JPanel {
   private final Drawer drawer;
 
   private boolean moveOperation = false;
   private Point   from, to;
 
-  public Painter(Drawer drawer) {
+  public DrawPanel(Drawer drawer) {
     this.drawer = drawer;
   }
 

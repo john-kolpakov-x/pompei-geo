@@ -3,7 +3,7 @@ package kz.pompei.geo_gebra.core.model;
 import java.awt.Dimension;
 import java.awt.Point;
 
-public class PixelWorldMapper {
+public class ScreenRealMapper {
   public double xCenter = 0, yCenter = 0, scaleX = 1, scaleY = 1;
 
   public vec2 center() {
@@ -14,14 +14,14 @@ public class PixelWorldMapper {
     return vec2.of(scaleX, scaleY);
   }
 
-  public void assign(PixelWorldMapper a) {
+  public void assign(ScreenRealMapper a) {
     xCenter = a.xCenter;
     yCenter = a.yCenter;
     scaleX  = a.scaleX;
     scaleY  = a.scaleY;
   }
 
-  public PixelWorldMapper() {
+  public ScreenRealMapper() {
     reset();
   }
 
@@ -36,23 +36,23 @@ public class PixelWorldMapper {
     return xCenter + " " + yCenter + " " + scaleX + " " + scaleY;
   }
 
-  public static PixelWorldMapper deserialize(String str) {
+  public static ScreenRealMapper deserialize(String str) {
     if (str == null) {
-      return new PixelWorldMapper();
+      return new ScreenRealMapper();
     }
 
     var split = str.trim().split("\\s+");
-    if (split.length != 4) return new PixelWorldMapper();
+    if (split.length != 4) return new ScreenRealMapper();
 
     try {
-      var rete = new PixelWorldMapper();
+      var rete = new ScreenRealMapper();
       rete.xCenter = Double.parseDouble(split[0]);
       rete.yCenter = Double.parseDouble(split[1]);
       rete.scaleX  = Double.parseDouble(split[2]);
       rete.scaleY  = Double.parseDouble(split[3]);
       return rete;
     } catch (NumberFormatException ignore) {
-      return new PixelWorldMapper();
+      return new ScreenRealMapper();
     }
 
   }

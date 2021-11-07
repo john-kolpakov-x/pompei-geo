@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import kz.pompei.geo_gebra.core.align.FloatAlign;
 import kz.pompei.geo_gebra.core.draw.DrawArrow;
-import kz.pompei.geo_gebra.core.model.PixelWorldMapper;
+import kz.pompei.geo_gebra.core.model.ScreenRealMapper;
 import kz.pompei.geo_gebra.core.model.vec2;
 import kz.pompei.geo_gebra.core.store.StrAcceptor;
 
@@ -16,11 +16,11 @@ public class Drawer {
 
   private static final Color AXES_COLOR = Color.gray;
 
-  private final PixelWorldMapper mapper = new PixelWorldMapper();
+  private final ScreenRealMapper mapper = new ScreenRealMapper();
 
   public Drawer(StrAcceptor pixelWorldMapperSaver) {
     this.pixelWorldMapperSaver = pixelWorldMapperSaver;
-    mapper.assign(PixelWorldMapper.deserialize(pixelWorldMapperSaver.get()));
+    mapper.assign(ScreenRealMapper.deserialize(pixelWorldMapperSaver.get()));
   }
 
   public void draw(Graphics2D g, Dimension size) {
