@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import javax.swing.JPanel;
 import kz.pompei.geo_gebra.core.draw.DrawArrow;
 import kz.pompei.geo_gebra.core.filter.EventFilter;
@@ -22,7 +23,8 @@ public class Painter extends JPanel {
   @Override
   public void paint(Graphics g) {
     super.paint(g);
-    drawer.draw((Graphics2D) g, getWidth(), getHeight());
+
+    drawer.draw((Graphics2D) g, getSize());
     paintMoveOperation((Graphics2D) g);
   }
 
@@ -33,8 +35,8 @@ public class Painter extends JPanel {
     DrawArrow.drawArrow(g, from, to, 10, 45.0);
   }
 
-  public void mouseEvent(MouseEventType met, MouseEvent e) {
-    if (EventFilter.mousePressed().left().does(e)) {
+  public void mouseEvent(MouseEvent e) {
+    if (EventFilter.mousePressed().middle().does(e)) {
       moveOperation = true;
       from          = e.getPoint();
       to            = from;
@@ -54,7 +56,7 @@ public class Painter extends JPanel {
       return;
     }
 
-    if (EventFilter.mouseReleased().left().does(e)) {
+    if (EventFilter.mouseReleased().middle().altPressed().does(e)) {
       if (moveOperation) {
         int deltaX = to.x - from.x;
         int deltaY = to.y - from.y;
@@ -64,7 +66,22 @@ public class Painter extends JPanel {
       }
       return;
     }
-
   }
 
+  public void mouseWheelEvent(MouseWheelEvent e) {
+    double rescaleFactor = 1.1;
+    drawer.rescale(e.getPoint(), getSize(), e.getWheelRotation() < 0 ? rescaleFactor : 1 / rescaleFactor);
+    repaint();
+  }
+
+  public void mouseClicked(MouseEvent e) {
+    if (e.getClickCount() == 1) {
+      drawer.printPointInfo(e.getPoint(), getSize());
+    }
+  }
+
+  public void resetMapper() {
+    drawer.resetMapper();
+    repaint();
+  }
 }

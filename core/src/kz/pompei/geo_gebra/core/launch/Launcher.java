@@ -1,16 +1,15 @@
 package kz.pompei.geo_gebra.core.launch;
 
-import java.awt.CardLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.nio.file.Path;
+import java.awt.event.MouseWheelEvent;
 import java.nio.file.Paths;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import kz.pompei.geo_gebra.core.paint.Drawer;
-import kz.pompei.geo_gebra.core.paint.MouseEventType;
 import kz.pompei.geo_gebra.core.paint.Painter;
 import kz.pompei.geo_gebra.core.store.StrAcceptorInFile;
 
@@ -39,18 +38,43 @@ public class Launcher {
     painter.addMouseListener(new MouseAdapter() {
       @Override
       public void mousePressed(MouseEvent e) {
-        painter.mouseEvent(MouseEventType.MOUSE_PRESSED, e);
+        painter.mouseEvent(e);
       }
 
       @Override
       public void mouseReleased(MouseEvent e) {
-        painter.mouseEvent(MouseEventType.MOUSE_RELEASED, e);
+        painter.mouseEvent(e);
+      }
+
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        painter.mouseClicked(e);
       }
     });
     painter.addMouseMotionListener(new MouseMotionAdapter() {
       @Override
       public void mouseDragged(MouseEvent e) {
-        painter.mouseEvent(MouseEventType.MOUSE_DRAGGED, e);
+        painter.mouseEvent(e);
+      }
+    });
+    painter.addMouseWheelListener(new MouseAdapter() {
+      @Override
+      public void mouseWheelMoved(MouseWheelEvent e) {
+        painter.mouseWheelEvent(e);
+      }
+    });
+
+    frame.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyTyped(KeyEvent e) {
+      }
+
+      @Override
+      public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_R) {
+          painter.resetMapper();
+          return;
+        }
       }
     });
 
