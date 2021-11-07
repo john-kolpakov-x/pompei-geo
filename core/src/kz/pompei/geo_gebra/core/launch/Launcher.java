@@ -9,8 +9,8 @@ import java.awt.event.MouseWheelEvent;
 import java.nio.file.Paths;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
-import kz.pompei.geo_gebra.core.paint.Drawer;
-import kz.pompei.geo_gebra.core.paint.DrawPanel;
+import kz.pompei.geo_gebra.core.paint.ScreenRealMapperMediator;
+import kz.pompei.geo_gebra.core.paint.PaintPanel;
 import kz.pompei.geo_gebra.core.store.StrAcceptorInFile;
 
 public class Launcher {
@@ -31,36 +31,36 @@ public class Launcher {
 
     var pixelWorldMapperSaver = new StrAcceptorInFile(dataDir.resolve("pixelWorldMapper.txt"));
 
-    DrawPanel drawPanel = new DrawPanel(new Drawer(pixelWorldMapperSaver));
+    PaintPanel paintPanel = new PaintPanel(new ScreenRealMapperMediator(pixelWorldMapperSaver));
 
-    frame.setContentPane(drawPanel);
+    frame.setContentPane(paintPanel);
 
-    drawPanel.addMouseListener(new MouseAdapter() {
+    paintPanel.addMouseListener(new MouseAdapter() {
       @Override
       public void mousePressed(MouseEvent e) {
-        drawPanel.mouseEvent(e);
+        paintPanel.mouseEvent(e);
       }
 
       @Override
       public void mouseReleased(MouseEvent e) {
-        drawPanel.mouseEvent(e);
+        paintPanel.mouseEvent(e);
       }
 
       @Override
       public void mouseClicked(MouseEvent e) {
-        drawPanel.mouseClicked(e);
+        paintPanel.mouseClicked(e);
       }
     });
-    drawPanel.addMouseMotionListener(new MouseMotionAdapter() {
+    paintPanel.addMouseMotionListener(new MouseMotionAdapter() {
       @Override
       public void mouseDragged(MouseEvent e) {
-        drawPanel.mouseEvent(e);
+        paintPanel.mouseEvent(e);
       }
     });
-    drawPanel.addMouseWheelListener(new MouseAdapter() {
+    paintPanel.addMouseWheelListener(new MouseAdapter() {
       @Override
       public void mouseWheelMoved(MouseWheelEvent e) {
-        drawPanel.mouseWheelEvent(e);
+        paintPanel.mouseWheelEvent(e);
       }
     });
 
@@ -72,7 +72,7 @@ public class Launcher {
       @Override
       public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_R) {
-          drawPanel.resetMapper();
+          paintPanel.resetMapper();
           return;
         }
       }

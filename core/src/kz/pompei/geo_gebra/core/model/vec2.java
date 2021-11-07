@@ -64,4 +64,23 @@ public record vec2(double x, double y) {
     return vec2.of(x - ax, y - ay);
   }
 
+  public double scalar(vec2 a) {
+    return x * a.x + y * a.y;
+  }
+
+  public vec2 scalar(vec2 ox, vec2 oy) {
+    return vec2.of(scalar(ox), scalar(oy));
+  }
+
+  public vec2 unScalar(vec2 ox, vec2 oy) {
+    return ox.mul(x).plus(oy.mul(y));
+  }
+
+  public double vec(vec2 a) {
+    return x * a.y - y * a.x;
+  }
+
+  public vec2 minus() {
+    return vec2.of(-x, -y);
+  }
 }

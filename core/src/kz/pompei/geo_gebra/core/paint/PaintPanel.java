@@ -10,21 +10,21 @@ import javax.swing.JPanel;
 import kz.pompei.geo_gebra.core.draw.DrawArrow;
 import kz.pompei.geo_gebra.core.filter.EventFilter;
 
-public class DrawPanel extends JPanel {
-  private final Drawer drawer;
+public class PaintPanel extends JPanel {
+  private final ScreenRealMapperMediator mapperMediator;
 
   private boolean moveOperation = false;
   private Point   from, to;
 
-  public DrawPanel(Drawer drawer) {
-    this.drawer = drawer;
+  public PaintPanel(ScreenRealMapperMediator mapperMediator) {
+    this.mapperMediator = mapperMediator;
   }
 
   @Override
   public void paint(Graphics g) {
     super.paint(g);
 
-    drawer.draw((Graphics2D) g, getSize());
+    mapperMediator.draw((Graphics2D) g, getSize());
     paintMoveOperation((Graphics2D) g);
   }
 
@@ -60,7 +60,7 @@ public class DrawPanel extends JPanel {
       if (moveOperation) {
         int deltaX = to.x - from.x;
         int deltaY = to.y - from.y;
-        drawer.moveAxes(deltaX, deltaY);
+        mapperMediator.moveAxes(deltaX, deltaY);
         moveOperation = false;
         repaint();
       }
@@ -70,18 +70,18 @@ public class DrawPanel extends JPanel {
 
   public void mouseWheelEvent(MouseWheelEvent e) {
     double rescaleFactor = 1.1;
-    drawer.rescale(e.getPoint(), getSize(), e.getWheelRotation() < 0 ? rescaleFactor : 1 / rescaleFactor);
+    mapperMediator.rescale(e.getPoint(), getSize(), e.getWheelRotation() < 0 ? rescaleFactor : 1 / rescaleFactor);
     repaint();
   }
 
   public void mouseClicked(MouseEvent e) {
     if (e.getClickCount() == 1) {
-      drawer.printPointInfo(e.getPoint(), getSize());
+      mapperMediator.printPointInfo(e.getPoint(), getSize());
     }
   }
 
   public void resetMapper() {
-    drawer.resetMapper();
+    mapperMediator.resetMapper();
     repaint();
   }
 }

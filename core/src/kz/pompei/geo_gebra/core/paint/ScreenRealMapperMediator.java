@@ -10,7 +10,7 @@ import kz.pompei.geo_gebra.core.model.ScreenRealMapper;
 import kz.pompei.geo_gebra.core.model.vec2;
 import kz.pompei.geo_gebra.core.store.StrAcceptor;
 
-public class Drawer {
+public class ScreenRealMapperMediator {
 
   private final StrAcceptor pixelWorldMapperSaver;
 
@@ -18,7 +18,7 @@ public class Drawer {
 
   private final ScreenRealMapper mapper = new ScreenRealMapper();
 
-  public Drawer(StrAcceptor pixelWorldMapperSaver) {
+  public ScreenRealMapperMediator(StrAcceptor pixelWorldMapperSaver) {
     this.pixelWorldMapperSaver = pixelWorldMapperSaver;
     mapper.assign(ScreenRealMapper.deserialize(pixelWorldMapperSaver.get()));
   }
